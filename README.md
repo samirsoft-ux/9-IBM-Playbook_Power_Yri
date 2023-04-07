@@ -1,7 +1,7 @@
 # IBM Power Virtual Servers ☁️ - Conexión VPN On-Premise 🗄️
 
 ## 📃 Introducción
-Power Systems Virtual Server ***PowerVS*** tiene servicio VPNaaS, pero existen algunas limitaciones, como se describe en la documentación ["Limitaciones VPNaaS de PowerVS"](https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-VPN-connections). Es por lo que, en este artículo, me gustaría enseñarte a cómo acceder a PowerVS usando una VPN site-to-site que se puede usar en VPC, en lugar de la VPNaaS de PowerVS.
+Power Systems Virtual Server ***PowerVS*** tiene servicio VPNaaS, pero existen algunas limitaciones, como se describe en la documentación ["Limitaciones VPNaaS de PowerVS"](https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-VPN-connections). Es por lo que, en este artículo, vas a aprender a cómo acceder a PowerVS usando una VPN site-to-site que se puede usar en VPC, en lugar de la VPNaaS de PowerVS.
 
 ### Los puntos clave a tener en cuenta antes de empezar con la guía son:
 - PowerVS no conoce la información de enrutamiento al rango de direcciones IP de la infraestructura local, por lo que no es posible enviar paquetes desde PowerVS a la red local.
@@ -9,16 +9,14 @@ Power Systems Virtual Server ***PowerVS*** tiene servicio VPNaaS, pero existen a
 - Defina una tabla de enrutamiento de entrada en la VPC para que los paquetes de PowerVS a la VPC (destinados a la IP local) se enruten a la puerta de enlace VPN.
 - La puerta de enlace VPN pasa los paquetes a las instalaciones a través del túnel VPN, lo que permite la comunicación de un extremo a otro.
 
-Gaaa
+A conitnuación se muestra la arquitectura de esta conexión, en esta también se muestra las distintas subnets involucradas tanto del lado de IBM como on-premise:
 <p align="center"><img width="800" src="https://github.com/samirsoft-ux/Playbook_Power/blob/main/Imagenes/IS-arqui-power.png"></p>
-
-
 
 <br />
 
 ## 📑 Índice  
 1. [Pre-Requisitos](#pencil-Pre-Requisitos)
-2. [Datos de Configuración de las subredes](#cloud-Datos-de-Configuración-de-las-subredes)
+2. [Configuración de la VPN site-to-site](#cloud-Configuración-de-la-VPN-site-to-site)
 3. [Creación del PowerVS location](#👷🏻Creación-del-PowerVS-location)
    * [Creación de las subredes privadas](#🕸️Creación-de-las-subredes-privadas)
 4. [Aprovisionar IBM i o AIX VSI's en cada PowerVS location](#computer-Aprovisionar-IBM-i-o-AIX-VSI's-en-cada-PowerVS-location)
@@ -35,7 +33,13 @@ Gaaa
 * Contar con una cuenta facturable en <a href="https://cloud.ibm.com/"> ***IBM Cloud®*** </a>.
 <br />
 
-## :cloud: Datos de Configuración de las subredes 
+## :cloud: Configuración de la VPN site-to-site
+* Esta configuración permite la conexión entre la red local(on-premise) con la VPC.
+   <br />
+   **Notas**
+   * La conexión debe ser ***Policy Based***
+   * Esta es la <a href="https://cloud.ibm.com/docs/vpc?topic=vpc-using-vpn"> ***documentación oficial*** </a> en la cual puedes un overview de lo que es una site-to-site VPN
+
 
 ### SUBRED 1
 | ***DATACENTER*** | ***CIDR*** |
