@@ -16,10 +16,10 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 
 ## 📑 Índice  
 1. [Pre-Requisitos](#pencil-Pre-Requisitos)
-2. [1° Configuración de la VPN site-to-site](#1°-Configuración-de-la-VPN-site-to-site)
-3. [2° Configuración del Cloud Connection en PowerVS](#2°-Configuración-del-Cloud-Connection-en-PowerVS)
-4. [3° Configuración del Transit Gateway](#3°-Configuración-del-Transit-Gateway)
-5. [4° Configuración del prefijo de la VPC](#4°-Configuración-del-prefijo-de-la-VPC)
+2. [1° Configuración de la VPN site-to-site](#1-°-Configuración-de-la-VPN-site-to-site)
+3. [2° Configuración del Cloud Connection en PowerVS](#2-°-Configuración-del-Cloud-Connection-en-PowerVS)
+4. [3° Configuración del Transit Gateway](#3-°-Configuración-del-Transit-Gateway)
+5. [4° Configuración del prefijo de la VPC](#4-°-Configuración-del-prefijo-de-la-VPC)
 6. [Desplegar y configurar un Vyatta en cada datacenter](#wrench-Desplegar-y-configurar-un-Vyatta-en-cada-datacenter)
 7. [Configurar los túneles GRE en cada PowerVS location](#gear-Configurar-los-túneles-GRE-en-cada-PowerVS-location)
 8. [Configurar los túneles IPSec entre los dos Vyattas](#hammer_and_wrench-Configurar-los-túneles-IPSec-entre-los-dos-Vyattas)
@@ -58,7 +58,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    * Crear un IKE policy.
    * Crear un IPsec policy.
 
-3. Finalmente luego de haber creado la conexión asegurarse que el estado de la VPN sea ***Activa***.
+3. Finalmente, luego de haber creado la conexión asegurarse que el estado de la VPN sea ***Activa***.
 
 <p align="center">
    <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_1.gif>
@@ -87,7 +87,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    * Seleccionar el botón "Continue".
    * En la seccion ***Subnet*** conectar la subnet privada de la instancia creada previamente.
 
-4. Finalmente luego de haber creado el ***Cloud connection*** asegurarse que el estado sea ***Established***.
+4. Finalmente, luego de haber creado el ***Cloud connection*** asegurarse que el estado sea ***Established***.
 
 <p align="center">
    <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_2.gif>
@@ -97,7 +97,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    * La conexión debe ser de tipo ***Transit Gateway***.
 
 ## 3° Configuración del Transit Gateway
-```Esta configuración es el segundo paso para poder establecer la conexión del Power con la VPC ya que se hace uso de la conexión Direct Link 2.0 ya establecida para que el Transit Gateway establezca la conexión Power-VPC.```
+```Esta configuración es el segundo paso para poder establecer la conexión del Power con la VPC ya que se hace uso de la conexión Direct Link 2.0 ya creada para que el Transit Gateway lo reconozca.```
 
 1. Ingresar al ***Navigation Menu*** y dentro dirigirse a la sección ***Interconnectivity***.
 
@@ -112,7 +112,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    * Establecer una conexión de tipo ***Direct Link*** y seleccionar la que hemos creado en la configuración anterior.
    * Dejar el nombre por defecto que aparece y seleccionar el botón ***Create***.
 
-4. Finalmente luego de haber creado el ***Transit Gateway*** asegurarse que el estado de la conexión ***Direct Link*** creada sea ***Attached***.
+4. Finalmente, luego de haber creado el ***Transit Gateway*** asegurarse que el estado de la conexión ***Direct Link*** creada sea ***Attached***.
 
 <p align="center">
    <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_3.gif>
@@ -133,32 +133,39 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    * En la sección ***IP range*** ingresar la subnet de la red local.
    * En la ubicación seleccionar Dallas 1 que es donde se encuentra la conexión VPN.
 
-5. Finalmente luego de haber creado el prefijo asegurarse que este se visualice.
+5. Finalmente, luego de haber creado el prefijo asegurarse que este se visualice.
 
 <p align="center">
    <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_4.gif>
 </p>
 
-## :cloud: Desplegar y configurar cloud connections
-Una vez desplegadas las instancias de PowerVS, procederemos a creación conexiones cloud, para ello se ubicará en la sección de ```Lista de recursos``` seleccione la opción ```Servicios y Software``` y ubique el recurso del PowerVS location implementado, posteriormente ingrese a la sección ```conexiones cloud``` y darle click en ```Crear una conexión```, una vez que aparezca la ventana de configuración complete lo siguiente:
+## 5° Conectar la VPC con el Transit Gateway
+```Esta configuración es el último paso para poder establecer la conexión del Power con la VPC ya que se configura la conexión con la VPC desde el Transit Gateway.```
 
-**Detalles del recurso:**
-* ```Nombre```: Asignar un nombre exclusivo para el cloud connection.
-* ```Velocidad```: Seleccionar velocidad Mbps para nuestra conexión.
-* ```Direccionamiento global```: Habilitar
+1. Ingresar al ***Navigation Menu*** dentro dirigirse a la sección ***Interconnectivity*** y seleccionar el apartado ***Transit Gateway***.
 
-* **Virtual Connections:**
-* ```Infrastructura Clásica```: Habilitarla ya que trabajaremos con túneles GRE.
+2. Ingresar al ***Transit Gateway*** creado anteriormente.
 
-* **Subredes:**
-* ```Conectar existente```: Seleccionar la subred creada previamente en el paso 2 y darle click en ```Conectar```.
+3. Dentro darle click al botón "Add connection +"
 
-Una vez completado los campos dar click en ```Finalizar``` y luego en ```Conectar```.
-Esperar unos minutos para establecer la conexión.
+   **Parámetros de creación**
+   * En la sección ***Network connection*** seleccionar VPC.
+   * En las opciones ***Connection reach*** dejar la que se habilita por defecto.
+   * En la sección ***Region*** elegir Dallas.
+   * En la sección ***Available connections*** seleccionar la VPC que creamos anteriormente.
+   * Dar click en el botón "Add".
 
-<p align="center"><img width="400" src="https://github.ibm.com/YrinaSuarez/IBM-PowerVS-Disaster-Recovery/blob/main/Imagenes/conectared.png"></p>
+5. Asegurarse que el estado de la conexión sea ***Attached***.
 
-<br />
+6. Dirigirse a la sección ***Routes***.
+
+7. Seleccionar el botón "Generate Report +"
+
+8. Finalmente, al verificar la información de enrutamiento, podemos ver que la información de la ruta se anuncia desde PowerVS y desde la VPC. Dado que definimos el rango de direcciones IP locales (10.241.0.0/24 en este caso) como un prefijo en la VPC, esa información de ruta también se anuncia desde la VPC. Esto se anuncia a PowerVS, por lo que los paquetes destinados a 10.241.0.0/24 enviados desde PowerVS llegarán a la VPC.
+
+<p align="center">
+   <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_5.gif>
+</p>
 
 ## :wrench: Desplegar y configurar un Vyatta en cada datacenter
 
