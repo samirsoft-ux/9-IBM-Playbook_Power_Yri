@@ -41,7 +41,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    
 2. Dar click en el botón "Create +".
 
-**Parámetros de creación**
+   **Parámetros de creación**
    * El tipo de VPN debe ser ***Site-to-site gateways***.
    * La locación debe ser en ***Dallas*** ya que es donde menos latencia existe si se encuentra en Perú.
    * Escribir un nombre para el gateway que haga referencia al servicio y donde se encuentra.
@@ -64,7 +64,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_1.gif>
 </p>
 
-**Notas**
+   **Notas**
    * La conexión debe ser ***Policy Based***.
    * Esta es la <a href="https://cloud.ibm.com/docs/vpc?topic=vpc-using-vpn"> ***documentación oficial*** </a> en la cual puedes ver un overview de lo que es una Site-to-Site VPN.
    * En el enrutador VPN de la red local, también especifique la subred PowerVS, no la subred de la VPC, para los CIDR del mismo nivel.
@@ -79,7 +79,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 
 3. Dentro darle click al botón "Create connection +".
 
-**Parámetros de creación**
+   **Parámetros de creación**
    * Escribir un nombre para la conexión que haga referencia de donde a donde se está realizando la conexión.
    * Seleccionar una velocidad de 50 Mbps ya que con esta es suficiente para solo probar la conexión una vez terminada toda la guía.
    * Asegurarse que las opciones ***Enable global routing*** y ***Enable IBM Cloud Transit Gateway*** se encuentren habilitadas.
@@ -87,9 +87,14 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    * Habilitar la opción ***I understand virtual connections must be configured by creating a transit gateway in IBM interconnectivity***.
    * Seleccionar el botón "Continue".
    * En la seccion ***Subnet*** conectar la subnet privada de la instancia creada previamente.
+
 4. Finalmente luego de haber creado el ***Cloud connection*** asegurarse que el estado sea ***Established***.
 
-**Notas**
+<p align="center">
+   <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_2.gif>
+</p>
+
+   **Notas**
    * La conexión debe ser de tipo ***Transit Gateway***.
 <br />
 
@@ -102,7 +107,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 
 3. Seleccionar el botón "Create transit gateway".
 
-**Parámetros de creación**
+   **Parámetros de creación**
    * Escribir un nombre para el Transit que haga referencia de donde a donde se está realizando la conexión.
    * Elegir el grupo de recursos de su preferencia.
    * Dentro de la sección ubicación la opción de routung debe de ser ***Local routing*** y la ubicación debe ser en Dallas la misma en donde se encuentra el Workspace de Powervs.
@@ -110,6 +115,10 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    * Dejar el nombre por defecto que aparece y seleccionar el botón ***Create***.
 
 4. Finalmente luego de haber creado el ***Transit Gateway*** asegurarse que el estado de la conexión ***Direct Link*** creada sea ***Attached***.
+
+<p align="center">
+   <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_3.gif>
+</p>
 <br />
 
 ## Configuración del prefijo de la VPC
