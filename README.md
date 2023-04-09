@@ -35,8 +35,8 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 <br />
 
 ## Configuración de la VPN site-to-site
-- Esta configuración permite la conexión entre la red local(on-premise) con la VPC.
-   <br />
+Esta configuración permite la conexión entre la red local(on-premise) con la VPC.
+<br />
 
    **Notas**
    - La conexión debe ser ***Policy Based***.
@@ -68,8 +68,8 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 <br />
 
 ## Configuración del Cloud Connection en PowerVS
-- Esta configuración es el primer paso para poder establecer la conexión del Power con la VPC ya que se establece que el power tiene que hacer uso de una conexión Direct Link 2.0.
-   <br />
+Esta configuración es el primer paso para poder establecer la conexión del Power con la VPC ya que se establece que el power tiene que hacer uso de una conexión Direct Link 2.0.
+<br />
 
    **Notas**
    - La conexión debe ser de tipo ***Transit Gateway***.
@@ -90,7 +90,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 <br />
 
 ## Configuración del Transit Gateway
-- Esta configuración es el segundo paso para poder establecer la conexión del Power con la VPC ya que se hace uso de la conexión Direct Link 2.0 ya establecida para que el Transit Gateway establezca la conexión Power-VPC.
+Esta configuración es el segundo paso para poder establecer la conexión del Power con la VPC ya que se hace uso de la conexión Direct Link 2.0 ya establecida para que el Transit Gateway establezca la conexión Power-VPC.
 <br />
 
    1. Ingresar al ***Navigation Menu*** y dentro dirigirse a la sección ***Interconnectivity***.
