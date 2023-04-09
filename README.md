@@ -167,27 +167,44 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_5.gif>
 </p>
 
-## :wrench: Desplegar y configurar un Vyatta en cada datacenter
+## 6° Definir la tabla de enrutamiento de entrada en la VPC
+```Por fin el último paso no sé que poner acá pero si llegaste hasta aca ya entendiste el truco campeon ;V.```
 
-<p align="center"><img width="800" src="https://github.ibm.com/YrinaSuarez/IBM-PowerVS-Disaster-Recovery/blob/main/Imagenes/vyatta_config.png"></p>
+1. Ingresar al ***Navigation Menu*** dentro dirigirse a la sección ***VPC Infraestructure*** y seleccionar el apartado ***VPCs***.
 
-<br />
+2. Ingresar a la ***VPC*** creada anteriormente.
 
-## :gear: Configurar los túneles GRE en cada PowerVS location
+3. Dirigirse a la sección ***Routing tables*** y seleccionar la opción ***Manage routing tables***.
 
-<p align="center"><img width="800" src="https://github.ibm.com/YrinaSuarez/IBM-PowerVS-Disaster-Recovery/blob/main/Imagenes/Conexión virtual - GRE creation.png"></p>
+4. Seleccionar el botón "Create +"
 
-<br />
+   **Parámetros de creación**
+   * En la sección ***Ubicación*** dejar por defecto seleccionado la opción de Dallas.
+   * Escribir un nombre para la conexión que haga referencia al servicio que se está usando.
+   * Asegurarse que esée seleccionada la VPC en la que se está trabajando.
+   * Elegir como tipo de tráfico ***Ingress***.
+   * Habilitar la opción ***Transit gateway***.
+   * Seleccionar el botón "Create routing table".
 
-## :hammer_and_wrench: Configurar los túneles IPSec entre los dos Vyattas
+5. Luego de haber creado la tabla de enrutamiento asegurarse que esta se visualice.
 
-<p align="center"><img width="800" src="https://github.ibm.com/YrinaSuarez/IBM-PowerVS-Disaster-Recovery/blob/main/Imagenes/vyatta_config 100%.png"></p>
+<p align="center">
+   <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_6.gif>
+</p>
 
-<br />
+6. Ingresar al IBM Cloud Shell
 
-## :gear: Configurar un servidor proxy en cada datacenter (Opcional)
+7. Ejecutar el comando 
+   ```
+   ibmcloud is vpc-routing-table-update <VPC ID> <INGRESS ROUTING_TABLE ID> --accept-routes-from-resource-type-filters vpn_gateway
+   ```
+   * Con esto la tabla recibe información de enrutamiento de la VPN Gateway y configura la ruta personalizada de ingreso para que el próximo salto de los paquetes, destinados a las instalaciones locales, sea la puerta de enlace de la VPN.
 
-<br />
+8. Asegurarse que las rutas creadas ejecutando el comando se visualicen en el portal.
+
+<p align="center">
+   <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_7.gif>
+</p>
 
 ## :mag: Referencias 
 * <a href="https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-creating-power-virtual-server#creating-power-virtual-server"> Creación de un Power Systems Virtual Server </a>.
@@ -200,8 +217,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 
 ## Comentarios del autor a tener en cuenta
 * The following Docs contains a connection configuration using the same concept as this article. https://cloud.ibm.com/docs/vpc topic=vpc-vpn-policy-based-ingress-routing-integration-example
-* I used Transit Gateway, but from November 2022, Transit Gateway will charge a metered fee for data transfer even for local type.
- I think it is also a good idea to connect Cloud Connection (Direct Link 2.0) directly to VPC without using Transit Gateway.
+* I used Transit Gateway, but from November 2022, Transit Gateway will charge a metered fee for data transfer even for local type. I think it is also a good idea to connect Cloud Connection (Direct Link 2.0) directly to VPC without using Transit Gateway.
 
 ## :black_nib: Autores 
-Italo Silva.
+Italo Silva Public Cloud Perú.
