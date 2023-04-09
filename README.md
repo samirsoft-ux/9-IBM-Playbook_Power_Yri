@@ -35,13 +35,13 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 <br />
 
 ## 1° Configuración de la VPN site-to-site
-Esta configuración permite la conexión entre la red local(on-premise) con la VPC.
+```Esta configuración permite la conexión entre la red local(on-premise) con la VPC.```
 
 1. Ingresar al ***Navigation Menu*** dentro dirigirse a la sección ***VPC Infraestructure*** y seleccionar el apartado ***VPNs***.
    
 2. Dar click en el botón "Create +".
 
-**Detalles de creación**
+**Parámetros de creación**
    * El tipo de VPN debe ser ***Site-to-site gateways***.
    * La locación debe ser en ***Dallas*** ya que es donde menos latencia existe si se encuentra en Perú.
    * Escribir un nombre para el gateway que haga referencia al servicio y donde se encuentra.
@@ -60,6 +60,10 @@ Esta configuración permite la conexión entre la red local(on-premise) con la V
 
 3. Finalmente luego de haber creado la conexión asegurarse que el estado de la VPN sea ***Activa***.
 
+<p align="center">
+   <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_1.gif>
+</p>
+
 **Notas**
    * La conexión debe ser ***Policy Based***.
    * Esta es la <a href="https://cloud.ibm.com/docs/vpc?topic=vpc-using-vpn"> ***documentación oficial*** </a> en la cual puedes ver un overview de lo que es una Site-to-Site VPN.
@@ -67,17 +71,15 @@ Esta configuración permite la conexión entre la red local(on-premise) con la V
 <br />
 
 ## 2° Configuración del Cloud Connection en PowerVS
-Esta configuración es el primer paso para poder establecer la conexión del Power con la VPC ya que se establece que el power tiene que hacer uso de una conexión Direct Link 2.0.
-
-**Notas**
-   * La conexión debe ser de tipo ***Transit Gateway***.
+```Esta configuración es el primer paso para poder establecer la conexión del Power con la VPC ya que se establece que el power tiene que hacer uso de una conexión Direct Link 2.0.```
 
 1. Ingresa a la sección de ***Lista de recursos*** y dentro ubicar el apartado ***Compute***.
 
 2. Seleccionar el ***Workspace*** en donde se va a trabajar y dirigirse a la sección ***Cloud connections***.
 
 3. Dentro darle click al botón "Create connection +".
-**Detalles de creación**
+
+**Parámetros de creación**
    * Escribir un nombre para la conexión que haga referencia de donde a donde se está realizando la conexión.
    * Seleccionar una velocidad de 50 Mbps ya que con esta es suficiente para solo probar la conexión una vez terminada toda la guía.
    * Asegurarse que las opciones ***Enable global routing*** y ***Enable IBM Cloud Transit Gateway*** se encuentren habilitadas.
@@ -86,23 +88,27 @@ Esta configuración es el primer paso para poder establecer la conexión del Pow
    * Seleccionar el botón "Continue".
    * En la seccion ***Subnet*** conectar la subnet privada de la instancia creada previamente.
 4. Finalmente luego de haber creado el ***Cloud connection*** asegurarse que el estado sea ***Established***.
+
+**Notas**
+   * La conexión debe ser de tipo ***Transit Gateway***.
 <br />
 
 ## 3° Configuración del Transit Gateway
-Esta configuración es el segundo paso para poder establecer la conexión del Power con la VPC ya que se hace uso de la conexión Direct Link 2.0 ya establecida para que el Transit Gateway establezca la conexión Power-VPC.
-<br />
+```Esta configuración es el segundo paso para poder establecer la conexión del Power con la VPC ya que se hace uso de la conexión Direct Link 2.0 ya establecida para que el Transit Gateway establezca la conexión Power-VPC.```
 
 1. Ingresar al ***Navigation Menu*** y dentro dirigirse a la sección ***Interconnectivity***.
 
 2. Dentro de esta sección dirigirse al apartado ***Transit Gateway***.
 
 3. Seleccionar el botón "Create transit gateway".
-**Detalles de creación**
+
+**Parámetros de creación**
    * Escribir un nombre para el Transit que haga referencia de donde a donde se está realizando la conexión.
    * Elegir el grupo de recursos de su preferencia.
    * Dentro de la sección ubicación la opción de routung debe de ser ***Local routing*** y la ubicación debe ser en Dallas la misma en donde se encuentra el Workspace de Powervs.
    * Establecer una conexión de tipo ***Direct Link*** y seleccionar la que hemos creado en la configuración anterior.
    * Dejar el nombre por defecto que aparece y seleccionar el botón ***Create***.
+
 4. Finalmente luego de haber creado el ***Transit Gateway*** asegurarse que el estado de la conexión ***Direct Link*** creada sea ***Attached***.
 <br />
 
