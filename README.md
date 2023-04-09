@@ -22,8 +22,9 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 5. [4° Configuración del prefijo de la VPC](#4-Configuración-del-prefijo-de-la-VPC)
 6. [5° Conectar la VPC con el Transit Gateway](#5-conectar-la-vpc-con-el-transit-gateway)
 7. [6° Definir la tabla de enrutamiento de entrada en la VPC](#6-Definir-la-tabla-de-enrutamiento-de-entrada-en-la-VPC)
-10. [Referencias](#mag-Referencias)
-11. [Autores](#black_nib-Autores)
+8. [7° Probando la conexión](#7-Probando-la-conexión)
+9. [Referencias](#mag-Referencias)
+10. [Autores](#black_nib-Autores)
 <br />
 
 ## :pencil: Pre-Requisitos 
