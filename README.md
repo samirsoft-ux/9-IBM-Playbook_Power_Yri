@@ -3,11 +3,11 @@
 ## 📃 Introducción
 Power Systems Virtual Server ***PowerVS*** tiene servicio VPNaaS, pero existen algunas limitaciones, como se describe en la documentación ["Limitaciones VPNaaS de PowerVS"](https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-VPN-connections). Es por lo que, en este artículo, vas a aprender a cómo acceder a PowerVS usando una VPN site-to-site que se puede usar en VPC, en lugar de la VPNaaS de PowerVS.
 
-### Los puntos clave a tener en cuenta antes de empezar con la guía son:
-- PowerVS no conoce la información de enrutamiento al rango de direcciones IP de la infraestructura local, por lo que no es posible enviar paquetes desde PowerVS a la red local.
-- La clave de esta configuración es definir el rango de direcciones IP de la red local como el prefijo de la VPC. Esta definición permite que la información de enrutamiento para el rango de IP local se anuncie a PowerVS a través de conexiones en la nube (Direct Link 2.0) entre la VPC y PowerVS, lo que permite que PowerVS envíe paquetes para el rango de IP local a la VPC.
-- Defina una tabla de enrutamiento de entrada en la VPC para que los paquetes de PowerVS a la VPC (destinados a la IP local) se enruten a la puerta de enlace VPN.
-- La puerta de enlace VPN pasa los paquetes a las instalaciones a través del túnel VPN, lo que permite la comunicación de un extremo a otro.
+   *** Los puntos clave a tener en cuenta antes de empezar con la guía son: ***
+   * PowerVS no conoce la información de enrutamiento al rango de direcciones IP de la infraestructura local, por lo que no es posible enviar paquetes desde PowerVS a la red local.
+   * La clave de esta configuración es definir el rango de direcciones IP de la red local como el prefijo de la VPC. Esta definición permite que la información de enrutamiento para el rango de IP local se anuncie a PowerVS a través de conexiones en la nube (Direct Link 2.0) entre la VPC y PowerVS, lo que permite que PowerVS envíe paquetes para el rango de IP local a la VPC.
+   * Defina una tabla de enrutamiento de entrada en la VPC para que los paquetes de PowerVS a la VPC (destinados a la IP local) se enruten a la puerta de enlace VPN.
+   * La puerta de enlace VPN pasa los paquetes a las instalaciones a través del túnel VPN, lo que permite la comunicación de un extremo a otro.
 
 A conitnuación se muestra la arquitectura de esta conexión, en esta también se muestra las distintas subnets involucradas tanto del lado de IBM como on-premise:
 <p align="center"><img width="800" src="https://github.com/samirsoft-ux/Playbook_Power/blob/main/Imagenes/IS-arqui-power.png"></p>
