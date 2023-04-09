@@ -207,7 +207,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 </p>
 
 ## 7° Probando la conexión
-``` Para probar la conexión vamos a ingresar desde una máquina que se encuentre dentro de la red local y a través de un comando TCP/IP vamos a probar si se llega a conectar con una instancia del Workspace de PowerVS(la cual tiene el ip privado 172.16.42.230).```
+```Para probar la conexión vamos a ingresar desde una máquina que se encuentre dentro de la red local y a través de un comando TCP/IP vamos a probar si se llega a conectar con una instancia del Workspace de PowerVS(la cual tiene el ip privado 172.16.42.230).```
 
 <p align="center">
    <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_8.gif>
