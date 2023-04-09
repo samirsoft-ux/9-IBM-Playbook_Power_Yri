@@ -215,7 +215,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 ## :mag: Referencias 
 * <a href="https://qiita.com/y_tama/items/50791f4c2256d2801804"> Guía original en Qiita </a>.
 
-## Comentarios del autor a tener en cuenta
+## Comentarios del autor original a tener en cuenta
 * The following Docs contains a connection configuration using the same concept as this article. https://cloud.ibm.com/docs/vpc topic=vpc-vpn-policy-based-ingress-routing-integration-example
 * I used Transit Gateway, but from November 2022, Transit Gateway will charge a metered fee for data transfer even for local type. I think it is also a good idea to connect Cloud Connection (Direct Link 2.0) directly to VPC without using Transit Gateway.
 * The route learned from the VPN Gateway cannot be deleted from the GUI, so if you want to delete it, use the following command.
