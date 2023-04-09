@@ -34,13 +34,8 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 * Tener un Workspace dentro del servicio de PowerVS con una instancia que solo tenga una subred privada.
 <br />
 
-## Configuración de la VPN site-to-site
+## 1° Configuración de la VPN site-to-site
 Esta configuración permite la conexión entre la red local(on-premise) con la VPC.
-
-**Notas**
-   * La conexión debe ser ***Policy Based***.
-   * Esta es la <a href="https://cloud.ibm.com/docs/vpc?topic=vpc-using-vpn"> ***documentación oficial*** </a> en la cual puedes ver un overview de lo que es una Site-to-Site VPN.
-   * En el enrutador VPN de la red local, también especifique la subred PowerVS, no la subred de la VPC, para los CIDR del mismo nivel.
 
 1. Ingresar al ***Navigation Menu*** dentro dirigirse a la sección ***VPC Infraestructure*** y seleccionar el apartado ***VPNs***.
    
@@ -64,9 +59,14 @@ Esta configuración permite la conexión entre la red local(on-premise) con la V
    * Crear un IPsec policy.
 
 3. Finalmente luego de haber creado la conexión asegurarse que el estado de la VPN sea ***Activa***.
+
+**Notas**
+   * La conexión debe ser ***Policy Based***.
+   * Esta es la <a href="https://cloud.ibm.com/docs/vpc?topic=vpc-using-vpn"> ***documentación oficial*** </a> en la cual puedes ver un overview de lo que es una Site-to-Site VPN.
+   * En el enrutador VPN de la red local, también especifique la subred PowerVS, no la subred de la VPC, para los CIDR del mismo nivel.
 <br />
 
-## Configuración del Cloud Connection en PowerVS
+## 2° Configuración del Cloud Connection en PowerVS
 Esta configuración es el primer paso para poder establecer la conexión del Power con la VPC ya que se establece que el power tiene que hacer uso de una conexión Direct Link 2.0.
 
 **Notas**
@@ -88,7 +88,7 @@ Esta configuración es el primer paso para poder establecer la conexión del Pow
 4. Finalmente luego de haber creado el ***Cloud connection*** asegurarse que el estado sea ***Established***.
 <br />
 
-## Configuración del Transit Gateway
+## 3° Configuración del Transit Gateway
 Esta configuración es el segundo paso para poder establecer la conexión del Power con la VPC ya que se hace uso de la conexión Direct Link 2.0 ya establecida para que el Transit Gateway establezca la conexión Power-VPC.
 <br />
 
