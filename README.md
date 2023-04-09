@@ -197,6 +197,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    ibmcloud is vpc-routing-table-update <VPC ID> <INGRESS ROUTING_TABLE ID> --accept-routes-from-resource-type-filters vpn_gateway
    ```
    * Con esto la tabla recibe información de enrutamiento de la VPN Gateway y configura la ruta personalizada de ingreso para que el próximo salto de los paquetes, destinados a las instalaciones locales, sea la puerta de enlace de la VPN.
+   * Con los comandos anteriores, la tabla de enrutamiento ahora se reescribe automáticamente para seguir el cambio de la dirección IP de VPN Gateway. Una vez que los paquetes llegan a la puerta de enlace de VPN, la puerta de enlace de VPN conoce la ruta a las instalaciones más allá, por lo que puede entregar los paquetes a las instalaciones a través del túnel VPN.
 
 8. Asegurarse que las rutas creadas ejecutando el comando se visualicen en el portal.
 
@@ -204,18 +205,22 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_7.gif>
 </p>
 
+## 7° Probando la conexión
+``` Para probar la conexión vamos a ingresar desde una máquina que se encuentre dentro de la red local y a través de un comando TCP/IP vamos a probar si se llega a conectar con una instancia del Workspace de PowerVS(la cual tiene el ip privado 172.16.42.230).```
+
+<p align="center">
+   <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_8.gif>
+</p>
+
 ## :mag: Referencias 
-* <a href="https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-creating-power-virtual-server#creating-power-virtual-server"> Creación de un Power Systems Virtual Server </a>.
-* <a href="https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-configuring-subnet"> Configuración de una subnet privada </a>.
-* <a href="https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-cloud-connections"> Configuración de cloud connections </a>.
-* <a href="https://cloud.ibm.com/docs/virtual-router-appliance?topic=virtual-router-appliance-getting-started"> Virtual Router Appliance (VRA) </a>.
-* <a href="https://cloud.ibm.com/docs/virtual-router-appliance?topic=solution-tutorials-configuring-IPSEC-VPN"> Configuración de túneles IPSec VPN </a>.
-* <a href="https://cloud.ibm.com/media/docs/downloads/power-iaas-tutorials/PowerVS_IBMi_DR_Tutorial_v1.pdf"> PowerVS DR Tutorial </a>.
-<br />
+* <a href="https://qiita.com/y_tama/items/50791f4c2256d2801804"> Guía original en Qiita </a>.
 
 ## Comentarios del autor a tener en cuenta
 * The following Docs contains a connection configuration using the same concept as this article. https://cloud.ibm.com/docs/vpc topic=vpc-vpn-policy-based-ingress-routing-integration-example
 * I used Transit Gateway, but from November 2022, Transit Gateway will charge a metered fee for data transfer even for local type. I think it is also a good idea to connect Cloud Connection (Direct Link 2.0) directly to VPC without using Transit Gateway.
-
+* The route learned from the VPN Gateway cannot be deleted from the GUI, so if you want to delete it, use the following command.
+```
+ibmcloud is vpc-routing-table-update <VPC ID> <INGRESS ROUTING_TABLE ID> --clean-all-accept-routes-from-filters
+```
 ## :black_nib: Autores 
 Italo Silva Public Cloud Perú.
