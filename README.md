@@ -16,10 +16,10 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 
 ## 📑 Índice  
 1. [Pre-Requisitos](#pencil-Pre-Requisitos)
-2. [Configuración de la VPN site-to-site](#Configuración-de-la-VPN-site-to-site)
-3. [Configuración del Cloud Connection en PowerVS](#Configuración-del-Cloud-Connection-en-PowerVS)
-4. [Configuración del Transit Gateway](#Configuración-del-Transit-Gateway)
-5. [Despliegue de Direct Link 2.0](#cloud-Despliegue-de-cloud-Direct-Link-2.0)
+2. [1° Configuración de la VPN site-to-site](#1°-Configuración-de-la-VPN-site-to-site)
+3. [2° Configuración del Cloud Connection en PowerVS](#2°-Configuración-del-Cloud-Connection-en-PowerVS)
+4. [3° Configuración del Transit Gateway](#3°-Configuración-del-Transit-Gateway)
+5. [4° Configuración del prefijo de la VPC](#4°-Configuración-del-prefijo-de-la-VPC)
 6. [Desplegar y configurar un Vyatta en cada datacenter](#wrench-Desplegar-y-configurar-un-Vyatta-en-cada-datacenter)
 7. [Configurar los túneles GRE en cada PowerVS location](#gear-Configurar-los-túneles-GRE-en-cada-PowerVS-location)
 8. [Configurar los túneles IPSec entre los dos Vyattas](#hammer_and_wrench-Configurar-los-túneles-IPSec-entre-los-dos-Vyattas)
@@ -68,7 +68,6 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
    * La conexión debe ser ***Policy Based***.
    * Esta es la <a href="https://cloud.ibm.com/docs/vpc?topic=vpc-using-vpn"> ***documentación oficial*** </a> en la cual puedes ver un overview de lo que es una Site-to-Site VPN.
    * En el enrutador VPN de la red local, también especifique la subred PowerVS, no la subred de la VPC, para los CIDR del mismo nivel.
-<br />
 
 ## 2° Configuración del Cloud Connection en PowerVS
 ```Esta configuración es el primer paso para poder establecer la conexión del Power con la VPC ya que se establece que el power tiene que hacer uso de una conexión Direct Link 2.0.```
@@ -96,7 +95,6 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 
    **Notas**
    * La conexión debe ser de tipo ***Transit Gateway***.
-<br />
 
 ## 3° Configuración del Transit Gateway
 ```Esta configuración es el segundo paso para poder establecer la conexión del Power con la VPC ya que se hace uso de la conexión Direct Link 2.0 ya establecida para que el Transit Gateway establezca la conexión Power-VPC.```
@@ -119,60 +117,27 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 <p align="center">
    <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_3.gif>
 </p>
-<br />
 
-## Configuración del prefijo de la VPC
-En el paso 1 se desplegó los PowerVS location en cada datacenter, ahora se hará el despliegue de las instancias de PowerVS en cada location implementado.
-Para ello se ubicará en la sección de ```Lista de recursos``` seleccione la opción ```Servicios y Software``` y ubique el recurso del PowerVS location implementado, posteriormente ingrese a la sección ```Instancias de Servidor Virtual``` y darle click en ```Crear Instancia```. 
-Una vez le aparezca la ventana para la configuración y creación de la *instancia de servidor virtual*, complete lo siguiente:  
-* ```Nombre de instancia```: Asigne un nombre exclusivo para su *instancia PowerVS*.
-* ```Número de instancias```: Se pueden desplegar hasta 5 instancias en un mismo despliegue. Para fines del tutorial solo desplegaremos una instancia.
-* ```Anclaje de máquinas virtuales```: Permite controlar el movimiento de las máquinas virtuales durante sucesos como reinicio. Para fines del tutorial usaremos: ```ninguno```
-* ```Grupo de colocación```: Los grupos de colocación proporcionan control sobre el host en el que se coloca una VM. El host lo determina la política de colocación del grupo, un servidor distinto o el mismo servidor. Para fines del tutorial usaremos: ```ninguno```
+## 4° Configuración del prefijo de la VPC
+```Esta configuración permite que la información de enrutamiento al rango de la subnet de la red local se anuncie en el lado del PowerVS a través del Cloud Connection (Direct Link 2.0) que hemos creado entre la VPC y el PowerVS, lo que permite que PowerVS envíe paquetes al rango de la subnet de la red local a la VPC.```
 
-**Clave SSH:**
-Añadiremos una clave SSH pública para poder conectarnos de manera segura a nuestra máquina virtual:
-* ```Elegir una clave SSH```: Elegir una clave SSH con la que nos conectaremos a nuestra instancia.
->Nota 1: Si no cuenta con una clave SSH, dar click en ```Crear una clave SSH```
->Asignar un nombre a nuestra nueva clave SSH y copiar la clave pública.
->Finalmente dar click en ```Añadir clave SSH```
->
-<p align="center"><img width="800" src="https://github.ibm.com/YrinaSuarez/IBM-PowerVS-Disaster-Recovery/blob/main/Imagenes/config%20power%20instancia.png"></p>
+1. Ingresar al ***Navigation Menu*** dentro dirigirse a la sección ***VPC Infraestructure*** y seleccionar el apartado ***VPCs***.
 
-**Imagen de arranque:**
-* ```Sistema Operativo```: Escoja el sistema operativo para su *instancia de Power VS*. Para el tutorial usaremos: IBM i
-* ```Imagen```: Seleccionamos la imagen con la cual trabajaremos. (Ejemplo: IBMi74-01-001)
-* ```Nivel```: Seleccionaremos el nivel de almacenamiento. (Ejemplo: Nivel 3)
-* ```Agrupación de almacenamiento```: Seleccionaremos agrupación automáticamente.
+2. Ingresar a la VPC creada anteriormente.
 
-**Perfil:**
-* ```Tipo de Máquina```: Escoja el tipo de máquina según la capacidad de memoria que proporciona. (Ejemplo: e980).
-* ```Tipo de núcleo```: Seleccionamos sin limitación compartida.
-* ```Núcleos```: Seleccionaremos la capacidad de núcleos.
-* ```Memoria```: Seleccionaremos la capacidad de memoria.
+3. Dirigirse al apartado ***Address prefixes***
 
-<p align="center"><img width="800" src="https://github.ibm.com/YrinaSuarez/IBM-PowerVS-Disaster-Recovery/blob/main/Imagenes/config%20perfil.png"></p>
+4. Dentro darle click al botón "Create"
 
-**Interfaces de red:**
-* ```Redes públicas```: Activarla en caso que la requiera.
+   **Parámetros de creación**
+   * En la sección ***IP range*** ingresar la subnet de la red local.
+   * En la ubicación seleccionar Dallas 1 que es donde se encuentra la conexión VPN.
 
-*Redes privadas:*
-Como contiuación del paso 2 donde se crearon las subredes privadas procederemos a conectarlas a nuestra instancia por desplegar, daremos click en ```Conectar existente``` y una vez le aparezca la ventana para la conexión, complete lo siguiente:
-* ```Redes existentes```: Seleccionar la red previamente creada.
-* ```Dirección IP```: Asignar automáticamente una dirección IP de un rango de IP.
+5. Finalmente luego de haber creado el prefijo asegurarse que este se visualice.
 
-<p align="center"><img width="800" src="https://github.ibm.com/YrinaSuarez/IBM-PowerVS-Disaster-Recovery/blob/main/Imagenes/config%20redes%20privadas.png"></p>
-
-Una vez completado los campos finalizar dando click en ```Conectar```.
-
-<br />
-
-<p align="center"><img width="800" src="https://github.ibm.com/YrinaSuarez/IBM-PowerVS-Disaster-Recovery/tree/main/Imagenes/arquitectura ref powervs.png"></p>
-
->Nota: Replicar el procedimiento para el despligue de la instancia en el otro datacenter
-
-<br />
-
+<p align="center">
+   <img src=https://github.com/samirsoft-ux/Playbook_Power/blob/main/GIFs/Part_4.gif>
+</p>
 
 ## :cloud: Desplegar y configurar cloud connections
 Una vez desplegadas las instancias de PowerVS, procederemos a creación conexiones cloud, para ello se ubicará en la sección de ```Lista de recursos``` seleccione la opción ```Servicios y Software``` y ubique el recurso del PowerVS location implementado, posteriormente ingrese a la sección ```conexiones cloud``` y darle click en ```Crear una conexión```, una vez que aparezca la ventana de configuración complete lo siguiente:
