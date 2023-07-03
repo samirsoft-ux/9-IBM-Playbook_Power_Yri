@@ -16,7 +16,7 @@ A conitnuación se muestra la arquitectura de esta conexión, en esta también s
 
 ## 📑 Índice  
 1. [Pre-Requisitos](#pencil-Pre-Requisitos)
-2. [1° Configuración de la VPN site-to-site](#1-°-Configuración-de-la-VPN-site-to-site)
+2. [1° Configuración de la VPN site-to-site](#1-Configuración-de-la-VPN-site-to-site)
 3. [2° Configuración del Cloud Connection en PowerVS](#2-Configuración-del-Cloud-Connection-en-PowerVS)
 4. [3° Configuración del Transit Gateway](#3-Configuración-del-Transit-Gateway)
 5. [4° Configuración del prefijo de la VPC](#4-Configuración-del-prefijo-de-la-VPC)
